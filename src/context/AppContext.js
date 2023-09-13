@@ -68,3 +68,29 @@ const initialState = {
     ],
     Location: "£"
 };
+
+
+// Creates the context this is the thing our components import and use to get the state
+const AppContext = createContext()
+
+// 3. Provider component - wraps the components we want to give access to the state
+export const AppProvider = (props) => {
+    const [state, dispatch] = useReducer(AppReducer, initialState);
+
+    const totalExpenses = state.expenses.reduce((total, item) => {
+        return (total = total + (item.unitprice * item.quantity))
+    },0);
+    state.cartValue = totalExpenses;
+    return(
+        <AppContext.Provider
+            value={{
+                expenses: state.expenses,
+                cartValue: state.cartValue,
+                dispatch,
+                Location: state.Location
+            }}
+        >
+            {props.children}
+        </AppContext.Provider>
+    );
+};
