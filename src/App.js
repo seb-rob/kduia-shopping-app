@@ -9,6 +9,7 @@ import Location from './components/Location';
 function App() {
   return (
     <div className="App">
+        <CartValue />
     </div>
   );
 }
